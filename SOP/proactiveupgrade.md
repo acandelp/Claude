@@ -28,3 +28,34 @@ oc get clusterversion -o yaml
 ```text
 oc get nodes
 ```
+
+### Step 3: Cluster Operators (CRITICAL)
+
+- All operators show "Available=True"
+- No operators are "Degraded=True" - **BLOCKING: Any degraded operator means DO NOT upgrade**
+- No operators stuck in "Progressing=True" - **BLOCKING: Any progressing operator means DO NOT upgrade**
+
+```text
+oc get co
+```
+
+### Step 4: Non-Cluster Operators (OLM)
+
+- All ClusterServiceVersions in "Succeeded" phase
+- No operators in "Failed" or "Unknown" state
+- List any operators that need attention
+
+```text
+oc get csv -A
+```
+
+### Step 5: Machine Config Pools
+
+- MACHINECOUNT equals READYMACHINECOUNT
+- UPDATEDMACHINECOUNT equals MACHINECOUNT
+- No pools in degraded state
+
+```text
+oc get mcp
+```
+
